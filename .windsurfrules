@@ -1,0 +1,80 @@
+# Go FastHTTP Example Project Guidelines
+
+This file contains guidelines and context for the Go FastHTTP Example project to help AI assistants understand the project better.
+
+## Project Overview
+
+This is a high-performance RESTful API server example built with Go and FastHTTP, demonstrating clean architecture principles with proper separation of concerns.
+
+## Architecture Guidelines
+
+1. **Follow Clean Architecture**
+   - Domain Layer: Core business models and repository interfaces
+   - Repository Layer: Data access logic
+   - Service Layer: Business logic
+   - Handler Layer: HTTP request/response handling
+
+2. **Dependency Flow**
+   - Dependencies should flow inward: Handler → Service → Repository
+   - Domain models should be independent of other layers
+
+3. **Code Organization**
+   - Keep related code in appropriate packages
+   - Follow Go best practices for naming and organization
+
+## Coding Standards
+
+1. **Go Style Guide**
+   - Follow standard Go formatting (use `gofmt` or `go fmt`)
+   - Use meaningful variable and function names
+   - Write clear comments for public functions and types
+
+2. **Error Handling**
+   - Always check errors and handle them appropriately
+   - Return errors to the caller rather than handling them internally when possible
+
+3. **Testing**
+   - Write unit tests for all business logic
+   - Use mocks for external dependencies
+   - Aim for high test coverage
+
+## API Design
+
+1. **RESTful Principles**
+   - Use appropriate HTTP methods (GET, POST, PUT, DELETE)
+   - Return appropriate status codes
+   - Use JSON for request/response bodies
+
+2. **Documentation**
+   - Document all API endpoints in swagger.yaml
+   - Include examples in the documentation
+
+## Development Workflow
+
+1. **Adding New Features**
+   - Define models in the domain layer
+   - Add repository methods
+   - Add service methods
+   - Add handler methods
+   - Register routes
+   - Update documentation
+   - Write tests
+
+2. **Performance Considerations**
+   - Be mindful of memory allocations
+   - Optimize for high concurrency
+   - Consider connection reuse
+
+## Extension Guidelines
+
+1. **Database Integration**
+   - Implement the UserRepository interface
+   - Follow dependency injection principles
+   - Keep database-specific code isolated
+
+2. **Authentication**
+   - Use middleware for authentication
+   - Keep authentication logic separate from business logic
+   - Follow security best practices
+
+These guidelines should be followed when working on the Go FastHTTP Example project to maintain consistency and quality.
