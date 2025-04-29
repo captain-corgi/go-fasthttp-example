@@ -1,10 +1,15 @@
 package repository
 
-import "github.com/captain-corgi/go-fasthttp-example/internal/domain/model"
+import (
+	"github.com/captain-corgi/go-fasthttp-example/internal/domain/model"
+)
+
+//go:generate mockgen -destination=mocks/user_repository_mock.go -package=mocks -source=user_repository.go
 
 // UserRepository defines the interface for user data operations
 type UserRepository interface {
 	GetByID(id string) (*model.User, error)
+	GetAll() ([]*model.User, error)
 	Create(user *model.User) error
 	Update(user *model.User) error
 	Delete(id string) error
@@ -46,4 +51,13 @@ func (r *InMemoryUserRepository) Update(user *model.User) error {
 func (r *InMemoryUserRepository) Delete(id string) error {
 	delete(r.users, id)
 	return nil
+}
+
+// GetAll retrieves all users
+func (r *InMemoryUserRepository) GetAll() ([]*model.User, error) {
+	users := make([]*model.User, 0, len(r.users))
+	for _, user := range r.users {
+		users = append(users, user)
+	}
+	return users, nil
 }

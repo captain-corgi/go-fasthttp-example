@@ -83,3 +83,15 @@ func (h *UserHandler) HandleDeleteUser(ctx *fasthttp.RequestCtx) {
 
 	ctx.SetStatusCode(fasthttp.StatusNoContent)
 }
+
+// HandleGetAllUsers handles GET requests for retrieving all users
+func (h *UserHandler) HandleGetAllUsers(ctx *fasthttp.RequestCtx) {
+	users, err := h.userService.GetAllUsers()
+	if err != nil {
+		ctx.SetStatusCode(fasthttp.StatusInternalServerError)
+		return
+	}
+
+	ctx.SetContentType("application/json")
+	json.NewEncoder(ctx).Encode(users)
+}

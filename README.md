@@ -65,6 +65,10 @@ go run cmd/server/main.go -port 3000
 
 ### User Management
 
+- **GET /users**
+  - Retrieves all users
+  - Response: 200 OK (with array of user data)
+
 - **GET /users/{id}**
   - Retrieves a user by ID
   - Response: 200 OK (with user data) or 404 Not Found

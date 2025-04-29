@@ -25,7 +25,21 @@ func main() {
 	// Create router
 	r := router.New()
 
+	// Allow CORS for all origins
+	corsMiddleware := func(handler fasthttp.RequestHandler) fasthttp.RequestHandler {
+		return func(ctx *fasthttp.RequestCtx) {
+			ctx.Response.Header.Set("Access-Control-Allow-Origin", "*")
+			handler(ctx)
+		}
+	}
+
+	// Health check route
+	r.GET("/health", func(ctx *fasthttp.RequestCtx) {
+		ctx.SetStatusCode(fasthttp.StatusOK)
+	})
+
 	// Register routes
+	r.GET("/users", userHandler.HandleGetAllUsers)
 	r.GET("/users/{id}", userHandler.HandleGetUser)
 	r.POST("/users", userHandler.HandleCreateUser)
 	r.PUT("/users/{id}", userHandler.HandleUpdateUser)
@@ -34,7 +48,7 @@ func main() {
 	// Start server
 	addr := fmt.Sprintf(":%d", *port)
 	log.Printf("Server starting on %s", addr)
-	if err := fasthttp.ListenAndServe(addr, r.Handler); err != nil {
+	if err := fasthttp.ListenAndServe(addr, corsMiddleware(r.Handler)); err != nil {
 		log.Fatalf("Error starting server: %s", err)
 	}
 }

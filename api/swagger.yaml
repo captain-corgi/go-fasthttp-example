@@ -1,0 +1,105 @@
+openapi: 3.0.0
+info:
+  title: Go FastHTTP Example API
+  version: 1.0.1
+servers:
+  - url: http://localhost:8080/
+paths:
+  /users/{id}:
+    get:
+      summary: Retrieves a user by ID
+      parameters:
+        - in: path
+          name: id
+          description: The unique identifier of the user
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: User not found
+    put:
+      summary: Updates an existing user
+      parameters:
+        - in: path
+          name: id
+          description: The unique identifier of the user
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    delete:
+      summary: Deletes a user
+      parameters:
+        - in: path
+          name: id
+          description: The unique identifier of the user
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: User deleted
+  /users:
+    get:
+      summary: Retrieves all users
+      responses:
+        "200":
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+    post:
+      summary: Creates a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "1"
+        username:
+          type: string
+          example: "john_doe"
+        email:
+          type: string
+          example: "john@example.com"
+      required:
+        - id
+        - username
+        - email
